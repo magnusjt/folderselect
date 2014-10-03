@@ -1,0 +1,11 @@
+[
+  {
+	"type": "folder",
+	"cells": ["Another folder"],
+	"content": []
+  },
+  {
+	"type": "item",
+	"cells": ["I was loaded with ajax"]
+  }
+]

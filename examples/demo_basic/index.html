@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Magnus Tovslid">
+    <title>Folderselect demo</title>
+    <link rel="stylesheet" href="../thirdparty/bootstrap-3.2.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../src/folderselect.css">
+</head>
+<body>
+<div class="container">
+    <h2>Basic demo</h2>
+    <div id="my_folderselect"></div>
+    <hr />
+    <label>Old school multi select box, could be used to submit form data:
+        <select id="selectbox" multiple='multiple' class="form-control"></select>
+    </label>
+    <hr />
+    <h3>Try this:</h3>
+    <ul>
+        <li>Click on the home icon to go back to the root folder</li>
+        <li>To select all items in a folder, click on the folder name in the breadcrumbs on top</li>
+        <li>To deselect all items in a folder, click on the folder name on the right side</li>
+    </ul>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="../../src/folderselect.js"></script>
+<script src="index.js"></script>
+</body>
+</html>
