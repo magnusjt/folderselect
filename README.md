@@ -1,6 +1,8 @@
 # folderselect
 
-Hierarchical select plugin for jQuery
+Hierarchical select plugin for jQuery.
+
+Check out the [live demo](http://magnustovslid.com/project/folderselect)
 
 ## TODO
 * Click to sort on different columns
