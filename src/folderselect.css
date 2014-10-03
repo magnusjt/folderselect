@@ -140,6 +140,7 @@ Styles for the two scrollable tables
     width: 100%;
     text-align: left;
     border-collapse: separate;
+    border-spacing: 0;
 }
 .fs-table td,
 .fs-table th
@@ -162,6 +163,7 @@ Styles for the two scrollable tables
 .fs-table thead th
 {
     border-right: 1px #eee solid;
+    border-bottom: 1px #eee solid;
     font-size: 12px;
     font-weight: normal;
     font-style: italic;
@@ -251,25 +253,11 @@ The headers with breadcrumbs in the selected table
     border-top: 1px lightskyblue solid;
 }
 
-/*
-Styles for the different icons
-*/
 .fs-td-icon
 {
     width: 20px;
+    text-align: center;
 }
-.fs-icon-home
-{
-    background:url('application_home.png') center center no-repeat;
-}
-
-.breadcrumb-separator {
-    border-bottom: 4px solid transparent;
-    border-top: 4px solid transparent;
-    border-left: 4px solid #000000;
-    display: inline-block;
-    height: 0;
-    width: 0;
-    margin-left: 5px;
-    margin-right: 5px;
+.fs-td-icon img{
+    vertical-align: text-bottom;
 }
