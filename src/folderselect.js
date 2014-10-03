@@ -4,16 +4,15 @@
 
     var defaults = {
         "data": {"type": "folder", "cells": [""], "content": []},
-        "selectable": true,
         "headers": [],
         "url": false,
-        "url_folderselect": "/",
-        "icon_item": "",
-        "icon_folder": "folderselect/icons/16x16/folder.png",
+        "spinner_gif": "ajax-loader.gif",
+        "icon_home": "home.png",
+        "icon_item": "page.png",
+        "icon_folder": "folder.png",
         "item_selected_callback": function(item){},
         "item_removed_callback": function(item){},
-        "folder_entered_callback": function(){},
-        "folder_removed_callback": function(){}
+        "folder_entered_callback": function(folder){}
     };
 
     function Plugin( element, options ) {
@@ -49,10 +48,6 @@
         this.element.addClass("fs-wrapper");
 
         this.parse_data([this.options.data], 0);
-
-        /*
-            Don't hold on to resources with don't need any longer
-         */
         this.options.data = undefined;
 
         html += "<div class='fs-breadcrumbs-wrapper'></div>";
@@ -181,7 +176,7 @@
             }
             else if(current_item.type === TYPE_ITEM)
             {
-                current_item.selectable = this.options.selectable;
+                current_item.selectable = true;
                 if(folder[i].hasOwnProperty("selectable")){
                     current_item.selectable = folder[i].selectable;
                 }
@@ -231,7 +226,7 @@
         // Put in the ajax-loader spinner
         this.element.find(".fs-tr-folder-selectable").filter(function(){
             return $(this).data("id") === folder_id;
-        }).children("td:nth-child(2)").append("<img src='" + this.options.url_folderselect + "ajax-loader.gif' />");
+        }).children("td:nth-child(2)").append("<img src='" + this.options.spinner_gif + "' />");
 
         // Build data object to send with ajax request
         var folder_obj = this.build_selected_object(folder_id);
@@ -246,16 +241,14 @@
                     that.parse_data(data, folder_id);
                     that.update_selector_from_folder_id(folder_id);
                 }else{
-                    // No data in this folder. Stop the user from trying to open this folder again.
                     that.data_flat[folder_id].openable = false;
-
-                    // Show the parent folder
                     that.update_selector_from_folder_id(that.data_flat[folder_id].folder_id);
                 }
             },
             error: function(){
-                $.error("Error retrieving data from server");
-                //that.update_selector_from_folder_id(that.data_flat[folder_id].folder_id);
+                console.log("Error retrieving data from server");
+                that.data_flat[folder_id].openable = false;
+                that.update_selector_from_folder_id(that.data_flat[folder_id].folder_id);
             }
         });
     };
@@ -317,7 +310,7 @@
 
         if(folder_id > this.root_id){
             table_rows_folders_html += "<tr class='fs-tr-folder-selectable' data-id='" + this.data_flat[folder_id].folder_id + "' title='Up one folder'>";
-            table_rows_folders_html += "<td class='fs-td-icon' style='" + this.get_icon_style(this.data_flat[folder_id].icon) + "'></td>";
+            table_rows_folders_html += "<td class='fs-td-icon'><img src='" + this.data_flat[folder_id].icon + "'></td>";
             table_rows_folders_html += "<td colspan='" + this.data_flat[folder_id].headers.length.toString() + "'>..</td></tr>";
         }
 
@@ -329,7 +322,7 @@
                     table_rows_folders_html += "<tr class='fs-tr-folder-not-selectable' title='This folder is empty'>";
                 }
 
-                table_rows_folders_html += "<td class='fs-td-icon' style='" + this.get_icon_style(items[i].icon) + "'></td>";
+                table_rows_folders_html += "<td class='fs-td-icon'><img src='" + items[i].icon + "'></td>";
 
                 for(j = 0; j < items[i].cells.length; j++){
                     table_rows_folders_html += "<td>" + items[i].cells[j] + "</td>";
@@ -348,7 +341,7 @@
                     table_rows_items_html += "<tr class='fs-tr-item-not-selectable" + class_selected + "' title='Not selectable'>";
                 }
 
-                table_rows_items_html += "<td class='fs-td-icon' style='" + this.get_icon_style(items[i].icon) + "'></td>";
+                table_rows_items_html += "<td class='fs-td-icon'><img src='" + items[i].icon + "'></td>";
 
                 for(j = 0; j < items[i].cells.length; j++){
                     table_rows_items_html += "<td>" + items[i].cells[j] + "</td>";
@@ -379,9 +372,6 @@
         selector_element.scrollTop(scroll_pos);
     };
 
-    /**
-     *
-     */
     Plugin.prototype.update_selected = function()
     {
         var i;
@@ -411,7 +401,6 @@
             Get the breadcrumbs for the current folder.
             Get as a string, with " / " separating each folder name.
              */
-            //var breadcrumb_names_html = that.get_breadcrumb_list_from_folder_id(folder_id).map(function(elem){return elem.cells[0];}).join("<span class='breadcrumb-separator'></span>");
             var breadcrumb_names_html = that.get_breadcrumb_list_from_folder_id(folder_id).map(function(elem){return elem.cells[0];}).join("/");
 
             /*
@@ -468,7 +457,7 @@
 
             for(i_items = 0; i_items < items.length; i_items++){
                 html += "<tr class='fs-tr-item-removable' title='Deselect' data-id='" + items[i_items].id + "'>";
-                html += "<td class='fs-td-icon' style='" + this.get_icon_style(items[i_items].icon) + "'></td>";
+                html += "<td class='fs-td-icon'><img src='" + items[i_items].icon + "'></td>";
 
                 for(var i_cells = 0; i_cells < items[i_items].cells.length; i_cells++){
                     html += "<td>" + items[i_items].cells[i_cells] + "</td>";
@@ -495,7 +484,7 @@
         var breadcrumb_list = this.get_breadcrumb_list_from_folder_id(folder_id);
         var breadcrumb_list_html = "<table class='fs-table-breadcrumbs'><tr>";
 
-        breadcrumb_list_html += "<td class='fs-td-breadcrumb-home fs-td-icon fs-icon-home' data-id='" + this.root_id + "' title='Navigate to root folder'></td>";
+        breadcrumb_list_html += "<td class='fs-td-breadcrumb-home fs-td-icon' data-id='" + this.root_id + "' title='Navigate to root folder'><img src='" + this.options.icon_home + "'></td>";
 
         for(var i = 0; i < breadcrumb_list.length-1; i++){
             breadcrumb_list_html += "<td class='fs-td-breadcrumb' title='Navigate to folder' data-id='" + breadcrumb_list[i].id + "'>" + breadcrumb_list[i].cells[0] + "</td>"
@@ -508,14 +497,6 @@
         breadcrumb_list_html += "</tr></table>";
 
         return breadcrumb_list_html;
-    };
-
-    Plugin.prototype.get_icon_style = function(icon)
-    {
-        if(icon == ""){
-            return "";
-        }
-        return 'background:url(' + icon + ') center center no-repeat;';
     };
 
     /**
@@ -573,9 +554,11 @@
     };
 
     Plugin.prototype.select_items_from_folder_id = function(folder_id){
+        var that = this;
         $.each(this.data_flat, function(id, obj){
-            if(obj.folder_id === folder_id){
+            if(obj.folder_id === folder_id && obj.selectable){
                 obj.selected = true;
+                that.options.item_selected_callback(that.build_selected_object(id));
             }
         });
 
@@ -593,16 +576,16 @@
     };
 
     Plugin.prototype.deselect_items_from_folder_id = function(folder_id){
+        var that = this;
         $.each(this.data_flat, function(id, obj){
             if(obj.folder_id === folder_id && obj.hasOwnProperty("selected")){
                 obj.selected = false;
+                that.options.item_removed_callback(that.build_selected_object(id));
             }
         });
 
         this.update_selected();
         this.update_selector();
-
-        this.options.folder_removed_callback(this.build_selected_object(folder_id));
     };
 
 
