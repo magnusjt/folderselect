@@ -1,16 +1,15 @@
 /*
 Wrapper for the whole plugin
+Reset some styles.
 */
-.fs-wrapper
-{
+.fs-wrapper{
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.428571429;
     color: #333333;
     background-color: #ffffff;
 }
-.fs-wrapper:after
-{
+.fs-wrapper:after{
     display: table;
     content: " ";
     clear: both;
@@ -22,18 +21,22 @@ Wrapper for the whole plugin
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-.fs-wrapper table
-{
+.fs-wrapper table{
     margin: 0;
     padding: 0;
     border: 0;
 }
+.fs-wrapper td{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: middle;
+}
 
 /*
-Wrapper for selector table
+Wrapper for selector table (left side)
 */
-.fs-selector-wrapper
-{
+.fs-selector-wrapper{
     width: 50%;
     float: left;
     border: 1px #aaa solid;
@@ -41,10 +44,9 @@ Wrapper for selector table
 }
 
 /*
-Wrapper for selected tables / divs
+Wrapper for selected tables / divs (right side)
 */
-.fs-selected-wrapper
-{
+.fs-selected-wrapper{
     width: 50%;
     border: 1px #aaa solid;
     border-left: 0;
@@ -55,50 +57,42 @@ Wrapper for selected tables / divs
 }
 
 /*
-    Wrapper around both selector and selected tables to set right hight, and to make them scroll
+Styles for the beardcrumbs on top of the tables
+*/
+.fs-breadcrumbs-wrapper{
+    width: 100%;
+    height: 21px;
+    border: 1px #aaa solid;
+    border-bottom: 0;
+    vertical-align: middle;
+}
+
+/*
+Wrapper around both selector/selected, to make them scroll vertically
  */
-.fs-scroll-wrapper
-{
+.fs-scroll-wrapper{
     height: 300px;
     overflow-y: scroll;
 }
 
 /*
-Styles for the beardcrumbs on top of the tables
+Breadcrumbs table
 */
-.fs-breadcrumbs-wrapper
-{
-    width: 100%;
-    min-height: 20px;
-    border: 1px #aaa solid;
-    border-bottom: 0;
-    font-size: 12px;
-}
-.fs-table-breadcrumbs
-{
-    min-height: 20px;
+.fs-table-breadcrumbs{
+    height: 20px;
     border-collapse: collapse;
 }
-.fs-td-breadcrumb-home
-{
-    cursor: pointer;
-}
-.fs-td-breadcrumb,
-.fs-td-breadcrumb-current
-{
+.fs-table-breadcrumbs td{
     cursor: pointer;
     border-left: 1px #eee solid;
     padding: 1px 7px 0;
-    vertical-align: middle;
 }
-.fs-td-breadcrumb:hover,
-.fs-td-breadcrumb-current:hover
-{
-    /*
-        Double border is a hack
-        so that this border overwrites
-        neighbor borders as well
-    */
+.fs-table-breadcrumbs td:first-child{
+    /* Home icon cell */
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.fs-table-breadcrumbs td:hover{
     border-left: 1px lightskyblue double;
     border-right: 1px lightskyblue double;
     background: -ms-linear-gradient(top, #f4ffff 50%, #e5ffff 100%);
@@ -108,118 +102,79 @@ Styles for the beardcrumbs on top of the tables
     background: -webkit-linear-gradient(top, #f4ffff 50%, #e5ffff 100%);
     background: linear-gradient(to bottom, #f4ffff 50%, #e5ffff 100%);
 }
-.fs-td-breadcrumb-current
-{
-    cursor: pointer;
-    border-left: 1px #eee solid;
-    padding: 1px 7px 0;
-    vertical-align: middle;
-}
-.fs-td-breadcrumb-current:hover
-{
-    /*
-        Double border is a hack
-        so that this border overwrites
-        neighbor borders as well
-    */
-    border-left: 1px lightskyblue double;
-    border-right: 1px lightskyblue double;
-    background: -ms-linear-gradient(top, #f4ffff 50%, #e5ffff 100%);
-    background: -moz-linear-gradient(top, #f4ffff 50%, #e5ffff 100%);
-    background: -o-linear-gradient(top, #f4ffff 50%, #e5ffff 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.5, #f4ffff), color-stop(1, #e5ffff));
-    background: -webkit-linear-gradient(top, #f4ffff 50%, #e5ffff 100%);
-    background: linear-gradient(to bottom, #f4ffff 50%, #e5ffff 100%);
+.fs-table-breadcrumbs td:first-child:hover{
+    /* Home icon hover */
+    border-left: 1px transparent double;
 }
 
 /*
-Styles for the two scrollable tables
+Styles for the scrollable tables
 */
-.fs-table
-{
+.fs-table{
     width: 100%;
     text-align: left;
     border-collapse: separate;
     border-spacing: 0;
 }
 .fs-table td,
-.fs-table th
-{
+.fs-table th{
     padding: 0;
-    padding-left: 3px;
+    padding-top: 2px;
+    padding-right: 3px;
+    padding-left: 2px;
     border-bottom: 1px solid transparent;
     border-top: 1px solid transparent;
 }
-
-.fs-table thead tr
-{
+.fs-table td:first-child{
+    /* Icon cell */
+    padding-top: 0;
+    padding-bottom: 2px;
+    width: 20px;
+}
+.fs-table thead tr{
     border-bottom: 1px #eee solid;
 }
-
-.fs-table tbody tr
-{
-}
-
-.fs-table thead th
-{
+.fs-table thead th{
     border-right: 1px #eee solid;
     border-bottom: 1px #eee solid;
     font-size: 12px;
     font-weight: normal;
     font-style: italic;
 }
-
-.fs-table thead th:last-child
-{
+.fs-table thead th:last-child{
     border-right: 0;
 }
 
 /*
-Different styles for selectables / openables
+Different styles for selectable / openable rows
 */
-.fs-tr-folder-selectable
-{
+.fs-tr-folder-selectable{
     cursor: pointer;
 }
-.fs-tr-folder-not-selectable
-{
+.fs-tr-folder-not-selectable{
     color: #999;
 }
-.fs-tr-item-selectable
-{
+.fs-tr-item-selectable{
     cursor: pointer;
 }
-.fs-tr-item-not-selectable
-{
+.fs-tr-item-not-selectable{
     color: #999;
 }
-
-.fs-tr-item-selected
-{
+.fs-tr-item-selected{
     display: none;
 }
-
-.fs-tr-item-removable
-{
+.fs-tr-item-removable{
     cursor: pointer;
 }
-
-/*
-The headers with breadcrumbs in the selected table
-*/
-.fs-div-folder-removable
-{
+.fs-div-folder-removable{
     width: 100%;
     cursor: pointer;
-    border-bottom: 1px #aaa solid;
-    border-top: 1px #aaa solid;
+    border-bottom: 1px #ccc solid;
+    border-top: 1px #ccc solid;
     vertical-align: middle;
     padding-top: 1px;
-    /*background-color: #f9fef9;*/
-    font-size: 12px;
 }
-.fs-div-folder-removable-text
-{
+.fs-div-folder-removable-text{
     height: 18px;
     line-height: 18px;
     padding-left: 5px;
@@ -230,12 +185,10 @@ The headers with breadcrumbs in the selected table
     direction: rtl;
     text-align: left;
 }
-
 .fs-tr-item-selectable:hover,
 .fs-tr-item-removable:hover,
 .fs-tr-folder-selectable:hover,
-.fs-div-folder-removable:hover
-{
+.fs-div-folder-removable:hover{
     background-color: #f4ffff;
     background: -ms-linear-gradient(top, #f4ffff 50%, #e5ffff 100%);
     background: -moz-linear-gradient(top, #f4ffff 50%, #e5ffff 100%);
@@ -247,17 +200,7 @@ The headers with breadcrumbs in the selected table
 .fs-tr-item-selectable:hover td,
 .fs-tr-item-removable:hover td,
 .fs-tr-folder-selectable:hover td,
-.fs-div-folder-removable:hover
-{
+.fs-div-folder-removable:hover{
     border-bottom: 1px lightskyblue solid;
     border-top: 1px lightskyblue solid;
-}
-
-.fs-td-icon
-{
-    width: 20px;
-    text-align: center;
-}
-.fs-td-icon img{
-    vertical-align: text-bottom;
 }
