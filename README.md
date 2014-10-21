@@ -24,6 +24,7 @@ $("#element").folderselect({
     icon_item:   "item.png",
     icon_folder: "folder.png",
     icon_home:   "home.png",
+	spinner_gif: "ajax-loader.gif",
     item_selected_callback:  function(item) {},
     item_removed_callback:   function(item) {},
     folder_entered_callback: function(folder) {}
