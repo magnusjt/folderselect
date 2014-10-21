@@ -31,6 +31,7 @@ Reset some styles.
     padding: 0;
     border: 0;
     vertical-align: middle;
+    white-space: nowrap;
 }
 
 /*
@@ -65,6 +66,7 @@ Styles for the beardcrumbs on top of the tables
     border: 1px #aaa solid;
     border-bottom: 0;
     vertical-align: middle;
+    overflow-x: hidden;
 }
 
 /*
@@ -182,7 +184,6 @@ Different styles for selectable / openable rows
     overflow-x: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    direction: rtl;
     text-align: left;
 }
 .fs-tr-item-selectable:hover,
