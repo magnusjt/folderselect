@@ -402,6 +402,9 @@
             Get as a string, with " / " separating each folder name.
              */
             var breadcrumb_names_html = that.get_breadcrumb_list_from_folder_id(folder_id).map(function(elem){return elem.cells[0];}).join("/");
+            if(breadcrumb_names_html == ''){
+                breadcrumb_names_html = 'Root';
+            }
 
             /*
             Sort the items under the current folder
