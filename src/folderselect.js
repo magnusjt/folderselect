@@ -67,10 +67,24 @@
 
         this.element.on("click", ".fs-tr-folder-selectable, .fs-td-breadcrumb, .fs-td-breadcrumb-home", function(){
             /*
-                Open a new folder
+            Open a folder.
+            NB: Scroll position is stored every time the selector is updated, that's why we have to do some trickery here.
             */
             var folder_id = $(this).data("id");
+            var scroll_element = that.element.find(".fs-selector-wrapper > .fs-scroll-wrapper");
+
+            // Store current scroll position for the next time we enter this folder
+            that.data_flat[that.current_folder_id].scroll = scroll_element.scrollTop();
+
+            // Get the store scroll of the folder we are about to enter
+            var stored_scroll_pos = that.data_flat[folder_id].scroll;
+
             that.update_selector_from_folder_id(folder_id);
+
+            // Restore the stored scroll, and make sure it is stored again
+            scroll_element.scrollTop(stored_scroll_pos);
+            that.data_flat[folder_id].scroll = stored_scroll_pos;
+
             that.options.folder_entered_callback(that.build_selected_object(folder_id));
         });
 
@@ -173,6 +187,8 @@
                 if(folder[i].hasOwnProperty("open") && folder[i].open === true){
                     this.current_folder_id = current_item.id;
                 }
+
+                current_item.scroll = 0;
             }
             else if(current_item.type === TYPE_ITEM)
             {
@@ -368,6 +384,10 @@
          */
         var selector_element = this.element.find(".fs-selector-wrapper > .fs-scroll-wrapper");
         var scroll_pos = selector_element.scrollTop();
+
+        // Store the scroll position for next time the folder is accessed.
+        this.data_flat[folder_id].scroll = scroll_pos;
+
         selector_element.html(html);
         selector_element.scrollTop(scroll_pos);
     };
